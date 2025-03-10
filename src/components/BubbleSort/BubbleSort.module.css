@@ -1,3 +1,7 @@
 .bubbleSortContainer {
     width: 30%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
 }

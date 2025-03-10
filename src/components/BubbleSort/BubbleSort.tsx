@@ -23,7 +23,6 @@ const BubbleSort = (props: BubbleSortProps) => {
                     [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; // Swap elements
                     const newArr = [...arr];
                     swapped = true;
-                    console.log(props.numbers);
                     setBubbleSortNumbers(newArr);
                     await props.sleep(100);
                 }

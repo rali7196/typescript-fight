@@ -35,17 +35,17 @@ const Competition = () => {
         sleep: sleep,
     };
 
-    const MergeSortProps: MergeSortProps = {
+    const mergeSortProps: MergeSortProps = {
         numbers: randomNumbers,
-        renderNumbers: renderNumbers,
+        renderNumbers: renderRandomNumbers,
         sleep: sleep,
     };
 
     return (
-        <>
+        <div className={styles["competitionContainer"]}>
             <BubbleSort {...bubbleSortProps} />
-            <MergeSort {...mergeSlotProps} />
-        </>
+            <MergeSort {...mergeSortProps} />
+        </div>
     );
 };
 

@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { JSX, useEffect, useState } from "react";
 
 export interface MergeSortProps {
     numbers: number[];
@@ -6,17 +6,26 @@ export interface MergeSortProps {
     sleep: (sleepTime: number) => Promise<void>;
 }
 
-const MergeSort = () => {
-    function mergeSort(arr: number[]): number[] {
+const MergeSort = (props: MergeSortProps) => {
+    const [steps, setSteps] = useState<number[][]>([]);
+    const [finalResult, setFinalResult] = useState<number[] | null>(null);
+
+    async function mergeSort(arr: number[]): Promise<number[]> {
         if (arr.length <= 1) {
             return arr;
         }
 
         const mid = Math.floor(arr.length / 2);
         const left = arr.slice(0, mid);
-        const right = arr.slice(mid);
+        setSteps((prev) => [...prev, left]);
+        await props.sleep(100);
 
-        return merge(mergeSort(left), mergeSort(right));
+        const right = arr.slice(mid);
+        setSteps((prev) => [...prev, right]);
+
+        await props.sleep(100);
+
+        return merge(await mergeSort(left), await mergeSort(right));
     }
 
     function merge(left: number[], right: number[]): number[] {
@@ -38,11 +47,25 @@ const MergeSort = () => {
         return result.concat(left.slice(leftIndex), right.slice(rightIndex));
     }
 
-    // Example usage:
-    const arr = [38, 27, 43, 3, 9, 82, 10];
-    console.log(mergeSort(arr)); // Output: [3, 9, 10, 27, 38, 43, 82]
+    useEffect(() => {
+        mergeSort(props.numbers).then(function (values: number[]) {
+            setFinalResult(values);
+        });
+    }, []);
 
-    return <div> hello </div>;
+    return (
+        <div>
+            {" "}
+            {steps.map((value: number[]) => (
+                <div>
+                    {value.map((currVal: number) => (
+                        <span>{currVal} &nbsp;</span>
+                    ))}
+                </div>
+            ))}{" "}
+            {finalResult !== null ? props.renderNumbers(finalResult) : <></>}
+        </div>
+    );
 };
 
 export default MergeSort;
