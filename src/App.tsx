@@ -1,21 +1,40 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import Conversation, { ConversationProps } from "./components/Conversation/Conversation";
+import Conversation, {
+    ConversationProps,
+} from "./components/Conversation/Conversation";
+import Competition from "./components/Competition/Competition";
 
 function App() {
     const [showInitialDialogue, setShowInitialDialogue] =
         useState<boolean>(true);
 
-    const initialConversationMessages: ConversationProps = {
-        messages: ["hello", "hi", "what's up"],
-        showInitialDialogue: (value) => setShowInitialDialogue(value)
-    }
+    const [showCompetition, setShowCompetition] = useState<boolean>(false);
 
-    return <>
-        {showInitialDialogue && <Conversation {...initialConversationMessages}/>}
-    </>;
+    const initialConversationMessages: ConversationProps = {
+        messages: [
+            "Merge sort! I challenge you to a duel!",
+            "Alright, what are the conditions?",
+            "Let's see who can sort their numbers the fastest",
+        ],
+        showInitialDialogue: (value) => {
+            setShowInitialDialogue(value);
+            setShowCompetition(!value);
+        },
+    };
+
+    return (
+        <>
+            {showInitialDialogue && (
+                <Conversation {...initialConversationMessages} />
+            )}
+            {!showInitialDialogue && showCompetition && 
+                (
+                    <Competition />
+                )
+            }
+        </>
+    );
 }
 
 export default App;
