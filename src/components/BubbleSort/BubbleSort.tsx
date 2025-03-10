@@ -4,16 +4,13 @@ import styles from "./BubbleSort.module.css";
 export interface BubbleSortProps {
     numbers: number[];
     renderNumbers: (numbers: number[]) => JSX.Element[];
+    sleep: (sleepTime: number) => Promise<void>;
 }
 
 const BubbleSort = (props: BubbleSortProps) => {
     const [bubbleSortNumbers, setBubbleSortNumbers] = useState<number[]>(
         props.numbers
     );
-
-    function sleep(sleepTime: number) {
-        return new Promise((resolve) => setTimeout(resolve, sleepTime));
-    }
 
     async function bubbleSort(arr: number[]): Promise<number[]> {
         let swapped: boolean;
@@ -28,7 +25,7 @@ const BubbleSort = (props: BubbleSortProps) => {
                     swapped = true;
                     console.log(props.numbers);
                     setBubbleSortNumbers(newArr);
-                    await sleep(50);
+                    await props.sleep(100);
                 }
             }
             if (!swapped) break;
