@@ -5,6 +5,7 @@ export interface BubbleSortProps {
     numbers: number[];
     renderNumbers: (numbers: number[]) => JSX.Element[];
     sleep: (sleepTime: number) => Promise<void>;
+    setFinished: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const BubbleSort = (props: BubbleSortProps) => {
@@ -27,7 +28,10 @@ const BubbleSort = (props: BubbleSortProps) => {
                     await props.sleep(100);
                 }
             }
-            if (!swapped) break;
+            if (!swapped) {
+                props.setFinished(true)
+                break;
+            };
         }
 
         return arr;

@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import styles from "./Competition.module.css";
 import BubbleSort, { BubbleSortProps } from "../BubbleSort/BubbleSort";
 import MergeSort, { MergeSortProps } from "../MergeSort/MergeSort";
-import { mergeSlotProps } from "@mui/material";
+import { Button } from "@mui/material";
 
-// export interface CompetitionProps {
+export interface CompetitionProps {
+    showFinalConversation: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-// }
-
-const Competition = () => {
+const Competition = (props: CompetitionProps) => {
     const randomNumbers: number[] = [];
     const numbersToGenerate = 50;
+    const [finished, setFinished] = useState<boolean>(false);
 
     for (let i = 0; i < numbersToGenerate; i++) {
         randomNumbers.push(Math.ceil(Math.random() * 100));
@@ -33,6 +34,7 @@ const Competition = () => {
         numbers: randomNumbers,
         renderNumbers: renderRandomNumbers,
         sleep: sleep,
+        setFinished: setFinished,
     };
 
     const mergeSortProps: MergeSortProps = {
@@ -42,10 +44,20 @@ const Competition = () => {
     };
 
     return (
-        <div className={styles["competitionContainer"]}>
-            <BubbleSort {...bubbleSortProps} />
-            <MergeSort {...mergeSortProps} />
-        </div>
+        <>
+            <div className={styles["competitionContainer"]}>
+                <BubbleSort {...bubbleSortProps} />
+                <MergeSort {...mergeSortProps} />
+            </div>
+            {finished && (
+                <Button
+                    onClick={() => props.showFinalConversation(true)}
+                    variant="contained"
+                >
+                    Continue the story
+                </Button>
+            )}
+        </>
     );
 };
 

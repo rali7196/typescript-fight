@@ -7,6 +7,7 @@ import styles from "./Conversation.module.css";
 export interface ConversationProps {
     messages: string[];
     showInitialDialogue: React.Dispatch<React.SetStateAction<boolean>>;
+    showButtonProp: boolean
 }
 
 const Conversation = (props: ConversationProps) => {
@@ -44,13 +45,13 @@ const Conversation = (props: ConversationProps) => {
                 <div className={styles["conversationContainer"]}>
                     {renderMessages()}
                 </div>
-                {showButton && (
+                {showButton && props.showButtonProp && (
                     <Button
                         onClick={() => props.showInitialDialogue(false)}
                         className={styles["button"]}
                         variant="contained"
                     >
-                        Click to hide
+                        Continue the story...
                     </Button>
                 )}
             </div>

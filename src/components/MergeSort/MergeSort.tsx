@@ -1,4 +1,4 @@
-import React, { JSX, useEffect, useState } from "react";
+import React, { JSX, useEffect, useRef, useState } from "react";
 
 export interface MergeSortProps {
     numbers: number[];
@@ -9,6 +9,15 @@ export interface MergeSortProps {
 const MergeSort = (props: MergeSortProps) => {
     const [steps, setSteps] = useState<number[][]>([]);
     const [finalResult, setFinalResult] = useState<number[] | null>(null);
+
+
+    const containerRef = useRef(null);
+
+    useEffect(() => {
+      if (containerRef.current) {
+        containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
+    }, [steps]); // Trigger scroll when content changes
 
     async function mergeSort(arr: number[]): Promise<number[]> {
         if (arr.length <= 1) {
@@ -54,7 +63,7 @@ const MergeSort = (props: MergeSortProps) => {
     }, []);
 
     return (
-        <div>
+        <div ref={containerRef}>
             {" "}
             {steps.map((value: number[]) => (
                 <div>
