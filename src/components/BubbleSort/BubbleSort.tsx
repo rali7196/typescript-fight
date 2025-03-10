@@ -1,11 +1,14 @@
 import React, { JSX, useEffect, useState } from "react";
 import styles from "./BubbleSort.module.css";
+import { Button } from "@mui/material";
 
 export interface BubbleSortProps {
     numbers: number[];
     renderNumbers: (numbers: number[]) => JSX.Element[];
     sleep: (sleepTime: number) => Promise<void>;
-    setFinished: React.Dispatch<React.SetStateAction<boolean>>
+    setFinished: React.Dispatch<React.SetStateAction<boolean>>;
+    finished: boolean;
+    showFinalConversation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BubbleSort = (props: BubbleSortProps) => {
@@ -29,9 +32,9 @@ const BubbleSort = (props: BubbleSortProps) => {
                 }
             }
             if (!swapped) {
-                props.setFinished(true)
+                props.setFinished(true);
                 break;
-            };
+            }
         }
 
         return arr;
@@ -42,8 +45,18 @@ const BubbleSort = (props: BubbleSortProps) => {
     }, []);
 
     return (
-        <div className={styles["bubbleSortContainer"]}>
-            {props.renderNumbers(bubbleSortNumbers)}
+        <div className={styles['masterContainer']}>
+            {props.finished && (
+                <Button
+                    onClick={() => props.showFinalConversation(true)}
+                    variant="contained"
+                >
+                    Continue the story
+                </Button>
+            )}
+            <div className={styles["bubbleSortContainer"]}>
+                {props.renderNumbers(bubbleSortNumbers)}
+            </div>
         </div>
     );
 };

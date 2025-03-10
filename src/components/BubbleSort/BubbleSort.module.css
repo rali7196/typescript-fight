@@ -3,5 +3,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
+}
 
+.masterContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }

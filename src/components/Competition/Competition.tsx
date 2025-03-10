@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import styles from "./Competition.module.css";
 import BubbleSort, { BubbleSortProps } from "../BubbleSort/BubbleSort";
 import MergeSort, { MergeSortProps } from "../MergeSort/MergeSort";
-import { Button } from "@mui/material";
 
 export interface CompetitionProps {
     showFinalConversation: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,6 +34,8 @@ const Competition = (props: CompetitionProps) => {
         renderNumbers: renderRandomNumbers,
         sleep: sleep,
         setFinished: setFinished,
+        finished: finished,
+        showFinalConversation: props.showFinalConversation,
     };
 
     const mergeSortProps: MergeSortProps = {
@@ -49,14 +50,6 @@ const Competition = (props: CompetitionProps) => {
                 <BubbleSort {...bubbleSortProps} />
                 <MergeSort {...mergeSortProps} />
             </div>
-            {finished && (
-                <Button
-                    onClick={() => props.showFinalConversation(true)}
-                    variant="contained"
-                >
-                    Continue the story
-                </Button>
-            )}
         </>
     );
 };
